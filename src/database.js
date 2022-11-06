@@ -20,6 +20,7 @@ async function connect() {
 		stats_members_channel_id TEXT,
 		stats_people_channel_id TEXT,
 		stats_bots_channel_id TEXT,
+		error_channel_id TEXT,
 		UNIQUE(guild_id)
 	)`);
 

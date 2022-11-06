@@ -11,6 +11,7 @@ const editableOptions = [
 	'stats_members_channel_id',
 	'stats_people_channel_id',
 	'stats_bots_channel_id',
+	'error_channel_id'
 ];
 
 async function verifyInputtedKey(interaction) {

@@ -6,6 +6,7 @@ const pretendoSupportCodes = require('../console-errors/pretendo/support-codes')
 const database = require('../database');
 
 const ayyRegex = /\bay{1,}\b/gi;
+const owoRegex = /\bowo{1,}\b/gi;
 const WIIU_SUPPORT_CODE_REGEX = /(1\d{2}-\d{4})/gm;
 const THREE_DS_SUPPORT_CODE_REGEX = /(0\d{2}-\d{4})/gm;
 // * There is probably a better way to do this regex
@@ -45,6 +46,33 @@ async function messageCreateHandler(message) {
 		return;
 	}
 
+	if (owoRegex.test(message.content)) {
+		// Assigning the only role worthy of this horrible command
+		if (message.member.roles.cache.find(role => role.name === 'Developer')) {
+			const uwud = message.content.replaceAll(message.content, (match) => {
+				let newMatch = match.replaceAll('o', 'u').replaceAll('O', 'U');
+				newMatch = newMatch.replaceAll('w', 'w').replaceAll('W', 'W');
+				newMatch = newMatch.replaceAll('r', 'w').replaceAll('R', 'W');
+				newMatch = newMatch.replaceAll('l', 'w').replaceAll('L', 'W');
+				newMatch = newMatch.replaceAll('?', '? :pleading_face:');
+				return newMatch;
+			});
+
+			// See if a threat should be made
+			if (uwud.length < 2000) {
+				await message.reply({
+					content: uwud,
+					allowedMentions: { parse: [] }
+				});
+			} else {
+				await message.reply('192.' + randomNumberGen(255) + '.' + randomNumberGen(255) + '.' + randomNumberGen(255) + ' start running sweetie :nail_care:');
+			}
+
+			return;
+		}
+	}
+
+
 	// * Check if automatic help is disabled
 	const isHelpDisabled = await database.checkAutomaticHelpDisabled(message.guildId, message.member.id);
 
@@ -56,6 +84,12 @@ async function messageCreateHandler(message) {
 	await tryAutomaticHelp(message);
 }
 
+// For the funny ip thing
+function randomNumberGen (max) {
+	var randomNumber = Math.floor(Math.random() * max);
+	return randomNumber;
+}
+
 /**
  *
  * @param {Discord.Message} message
@@ -64,14 +98,31 @@ async function tryAutomaticHelp(message) {
 	const errorCodeEmbed = checkForErrorCode(message);
 
 	if (errorCodeEmbed) {
-		// * Found an error/support code
-		// * Send it and bail
-		await message.reply({
-			embeds: [errorCodeEmbed]
-		});
+		const errorChannelId = await database.getGuildSetting(message.guildId, 'error_channel_id');
+		const unsupportedChannelEmbed = unsupportedErrorChannel(errorChannelId);
 
-		return;
+		// Check if any channel has been whitelisted at all
+		const channels = await message.guild.channels.fetch();
+		const errorChannel = channels.find(channel => channel.id === errorChannelId);
+
+		if (!errorChannel) {
+			throw new Error('Error support failed to submit - no channel whitelisted');
+		}
+
+		if (message.channelId === errorChannelId) {
+			// * Found an error/support code
+			// * Send it and bail
+			await message.reply({
+				embeds: [errorCodeEmbed]
+			});
+	
+			return;
+		} else {
+			await message.reply({
+				embeds: [unsupportedChannelEmbed]});
+		}
 	}
+
 
 	// * NLP
 	const response = await message.guild.client.nlpManager.process(message.content);
@@ -115,6 +166,15 @@ function checkForErrorCode(message) {
 	if (THREE_DS_SUPPORT_CODE_REGEX.test(message.content)) {
 		return get3DSSupportCodeInfo(message.content.match(THREE_DS_SUPPORT_CODE_REGEX)[0]);
 	}
+}
+
+function unsupportedErrorChannel(whitelistedErrorChannel) {
+	const embed = new Discord.EmbedBuilder();
+	embed.setColor(0x000000);
+	embed.setTitle('Blacklisted Channel');
+	embed.setDescription(`This channel doesn't allow for error support.\nPlease refer to <#${whitelistedErrorChannel}>`);
+
+	return embed;
 }
 
 function getWiiUSupportCodeInfo(supportCode) {
@@ -176,7 +236,6 @@ function getWiiUSupportCodeInfo(supportCode) {
 	if (code.link !== 'Missing link') {
 		embed.setURL(code.link);
 	}
-
 	return embed;
 }
 
