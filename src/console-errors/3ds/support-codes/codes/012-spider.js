@@ -7,5 +7,5 @@ module.exports = {
 	'1506': new SupportCode('SSLMOD_CERT_HAS_EXPIRED', 'Missing description', 'The certificate has expired.\n(Please check that date\nand time settings on your\nNintendo 3DS system\nare correct.)', 'Missing fix', 'Missing link'),
 	'1509': new SupportCode('SSLMOD_DEPTH_ZERO_SELF_SIGNED_CERT', 'Missing description', 'Self-signed certificates\ncannot be verified.', 'Missing fix', 'Missing link'),
 	'1510': new SupportCode('SSLMOD_SELF_SIGNED_CERT_IN_CHAIN', 'Missing description', 'The certificate\nis self-signed.', 'Missing fix', 'Missing link'),
-	'1511': new SupportCode('SSLMOD_UNABLE_TO_GET_ISSUER_CERT', 'Missing description', 'Certificate not found.', 'Missing fix', 'Missing link'),
+	'1511': new SupportCode('SSLMOD_UNABLE_TO_GET_ISSUER_CERT', 'Rverse and Juxtaposition conflict', 'Certificate not found.', 'Delete REV.pem and reinstall nimbus', 'https://github.com/PretendoNetwork/nimbus/releases \ndownload the combined zip and extract to the root of your sd card'),
 };
