@@ -78,7 +78,7 @@ module.exports = {
 	'0409': new SupportCode('PythonCore::ConversionError', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0410': new SupportCode('PythonCore::ValidationError', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0501': new SupportCode('Transport::Unknown', 'The reason for the error is unknown', 'Missing message', 'Missing fix', 'Missing link'),
-	'0502': new SupportCode('Transport::ConnectionFailure', 'Network connection was unable to be established', 'Missing message', 'Missing fix', 'Missing link'),
+	'0502': new SupportCode('Transport::ConnectionFailure', 'Network connection was unable to be established', 'An error has occurred. Please try again later.\n\nIf the problem persists, please\nvisit support.nintendo.com', 'This service is down at the moment\ntry again later or ask in the Pretendo discord', 'https://invite.gg/pretendo'),
 	'0503': new SupportCode('Transport::InvalidUrl', 'The URL contained in the StationURL is invalid. The syntax may be incorrect', 'Missing message', 'Missing fix', 'Missing link'),
 	'0504': new SupportCode('Transport::InvalidKey', 'The key used to authenticate a given station is invalid. The secure transport layer uses secret-key based cryptography to ensure the integrity and confidentiality of data sent across the network', 'Missing message', 'Missing fix', 'Missing link'),
 	'0505': new SupportCode('Transport::InvalidURLType', 'The specified transport type is invalid', 'Missing message', 'Missing fix', 'Missing link'),
