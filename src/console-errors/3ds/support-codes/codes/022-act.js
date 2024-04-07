@@ -3,6 +3,7 @@ const SupportCode = require('../../../common/support-code');
 module.exports = {
 	'1021': new SupportCode('Missing name', 'Missing description', 'There is no Nintendo Network ID\nlinked to this system.\n\nTo link a Nintendo Network ID, go\nto Nintendo Network ID Settings in\nSystem Settings', 'Missing fix', 'Missing link'),
 	'1022': new SupportCode('Missing name', 'Missing description', 'There is a Nintendo Network ID\nlinked to this system', 'Missing fix', 'Missing link'),
+	'2402': new SupportCode('Missing name', 'Account creation error', 'An error has occurred.\nPlease try again later.\nIf this problem persists, please\nmake a note of the error code and\nvisit support.nintendo.com.', 'Create an account via the Pretendo website and log into it\ninstead of creating it on your console', 'https://pretendo.network/account/register')
 	'2452': new SupportCode('Missing name', 'The device you are using was not authorized to make the request', 'Missing message', 'Try again later or on a different device', 'Missing link'),
 	'2501': new SupportCode('Missing name', 'The console certificate sent in the request was invalid or missing', 'You cannot use this Nintendo Network\nID on this system.\n\nPlease make a note of the error code\nand visit support.nintendo.com', 'Ensure your console certificate is untampered with and try again later. If using Citra, dump your system files again', 'Missing link'),
 	'2502': new SupportCode('Missing name', 'Missing description', 'This Nintendo Network ID cannot be\nused because its region setting does\nnot match the setting of this system.\n\nPlease check Region Settings in System\nSettings ⇒ Other Settings ⇒ Profile, and\nconfirm that this setting matches the ID', 'Missing fix', 'Missing link'),
@@ -58,5 +59,5 @@ module.exports = {
 	'2884': new SupportCode('Missing name', 'Missing description', 'Online services are not available\nin your country of residence', 'Missing fix', 'Missing link'),
 	'2911': new SupportCode('Missing name', 'Missing description', 'Online Interaction has been\nrestricted by Parental Controls', 'Missing fix', 'Missing link'),
 	'5363': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'5515': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'5515': new SupportCode('Missing name', 'Your PNID is not linked to your console', 'An error has occurred.\nPlease try again later.\nIf this problem persists, please\nmake a note of the error code and\nvisit support.nintendo.com.', 'Go to Settings > Nintendo Network Settings, and follow the instructions to link your account to your console.\nIt will refer to it as nintendo, but ignore it, it will link to pretendo', 'Missing link'),
 };
