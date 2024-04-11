@@ -167,5 +167,16 @@
                 "link": "Missing link"
             }
         }
+    },
+    "3ds": {
+        "000": {
+            "0000": {
+                "name": "Missing name",
+                "description": "Missing description",
+                "message": "An error has occurred.\nPlease try again later.\n\nIf the problem persists, please\nmake a note of the error code and\nvisit support.nintendo.com.",
+                "fix": "Missing fix",
+                "link": "Missing link"
+            }
+        }
     }
 }
