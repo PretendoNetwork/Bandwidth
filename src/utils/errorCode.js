@@ -12,24 +12,27 @@ const PRETENDO_SUPPORT_CODE_REGEX = /(\b678-\d{4}\b|\b598-\d{4}\b)/gm; // * 678 
  *
  * @param {String}} message
  */
-function checkForErrorCode(text) {
+function checkForErrorCode(text, locale) {
+	// Grab Locales
+	const localeJSON = require(`../locales/${locale}.json`);
+	
 	// TODO - WiiU error codes, 3DS error codes
 
 	// * Run this check first to avoid WiiU conflicts
 	if (PRETENDO_SUPPORT_CODE_REGEX.test(text)) {
-		return getPretendoSupportCodeInfo(text.match(PRETENDO_SUPPORT_CODE_REGEX)[0]);
+		return getPretendoSupportCodeInfo(text.match(PRETENDO_SUPPORT_CODE_REGEX)[0], localeJSON);
 	}
 
 	if (WIIU_SUPPORT_CODE_REGEX.test(text)) {
-		return getWiiUSupportCodeInfo(text.match(WIIU_SUPPORT_CODE_REGEX)[0]);
+		return getWiiUSupportCodeInfo(text.match(WIIU_SUPPORT_CODE_REGEX)[0], localeJSON);
 	}
 
 	if (THREE_DS_SUPPORT_CODE_REGEX.test(text)) {
-		return get3DSSupportCodeInfo(text.match(THREE_DS_SUPPORT_CODE_REGEX)[0]);
+		return get3DSSupportCodeInfo(text.match(THREE_DS_SUPPORT_CODE_REGEX)[0], localeJSON);
 	}
 }
 
-function getWiiUSupportCodeInfo(supportCode) {
+function getWiiUSupportCodeInfo(supportCode, localeJSON) {
 	const [moduleId, descriptionId] = supportCode.split('-');
 
 	const mod = wiiuSupportCodes[moduleId]; // * `module` is reserved
@@ -38,7 +41,7 @@ function getWiiUSupportCodeInfo(supportCode) {
 		return;
 	}
 
-	const code = mod.codes[descriptionId];
+	const code = localeJSON.wiiu[moduleId][descriptionId];
 
 	const embed = new Discord.EmbedBuilder();
 	embed.setColor(0x009AC7);
@@ -92,7 +95,7 @@ function getWiiUSupportCodeInfo(supportCode) {
 	return embed;
 }
 
-function get3DSSupportCodeInfo(supportCode) {
+function get3DSSupportCodeInfo(supportCode, localeJSON) {
 	const [moduleId, descriptionId] = supportCode.split('-');
 
 	const mod = threeDSSupportCodes[moduleId]; // * `module` is reserved
@@ -101,7 +104,7 @@ function get3DSSupportCodeInfo(supportCode) {
 		return;
 	}
 
-	const code = mod.codes[descriptionId];
+	const code = localeJSON.3ds[moduleId][descriptionId];
 
 	const embed = new Discord.EmbedBuilder();
 	embed.setColor(0xD12228);
@@ -155,7 +158,7 @@ function get3DSSupportCodeInfo(supportCode) {
 	return embed;
 }
 
-function getPretendoSupportCodeInfo(supportCode) {
+function getPretendoSupportCodeInfo(supportCode, localeJSON) {
 	const [moduleId, descriptionId] = supportCode.split('-');
 
 	const mod = pretendoSupportCodes[moduleId]; // * `module` is reserved
@@ -194,7 +197,7 @@ function getPretendoSupportCodeInfo(supportCode) {
 		return;
 	}
 
-	const code = mod.codes[codeId];
+	const code = localeJSON.pretendo[moduleId][codeId];
 
 	const embed = new Discord.EmbedBuilder();
 	embed.setColor(0x131733);
