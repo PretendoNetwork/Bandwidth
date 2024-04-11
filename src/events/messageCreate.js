@@ -57,7 +57,7 @@ async function messageCreateHandler(message) {
  * @param {Discord.Message} message
  */
 async function tryAutomaticHelp(message) {
-	const errorCodeEmbed = errorCodeUtils.checkForErrorCode(message.content);
+	const errorCodeEmbed = errorCodeUtils.checkForErrorCode(message.content, 'en-US');
 	const row = new Discord.ActionRowBuilder();
 
 	if (errorCodeEmbed) {
