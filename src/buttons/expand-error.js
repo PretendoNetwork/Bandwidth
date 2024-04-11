@@ -18,7 +18,7 @@ async function expandErrorHandler(interaction) {
 	const ogButton = message.components[0];
 
 	// Grab that error code again
-	const errorCodeEmbed = errorCodeUtils.checkForErrorCode(message.embeds[0].title);
+	const errorCodeEmbed = errorCodeUtils.checkForErrorCode(message.embeds[0].title, interaction.locale);
 
 	// Swap the embed out, while removing our button component
 	message.edit({
