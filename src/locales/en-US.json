@@ -1,0 +1,171 @@
+{
+    "pretendo": {
+        "598": {
+            "0000": {
+                "name": "598-0000",
+                "description": "Generic network error",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0001": {
+                "name": "598-0001",
+                "description": "Cannot like own post",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0002": {
+                "name": "598-0002",
+                "description": "Cannot follow community\nUser either already following it or the database may not be available",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0003": {
+                "name": "598-0003",
+                "description": "Cannot Follow User",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0004": {
+                "name": "598-0004",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0005": {
+                "name": "598-0005",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0006": {
+                "name": "598-0006",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0007": {
+                "name": "598-0007",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0008": {
+                "name": "598-0008",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0009": {
+                "name": "598-0009",
+                "description": "User limited from posting",
+                "message": null,
+                "fix": "Contact a moderator to appeal",
+                "link": null
+            },
+            "0010": {
+                "name": "598-0010",
+                "description": "User temporary banned",
+                "message": null,
+                "fix": "Contact a moderator to appeal",
+                "link": null
+            },
+            "0011": {
+                "name": "598-0011",
+                "description": "User permanently banned",
+                "message": null,
+                "fix": "Contact a moderator to appeal",
+                "link": null
+            },
+            "0012": {
+                "name": "598-0012",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0013": {
+                "name": "598-0013",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0014": {
+                "name": "598-0014",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0015": {
+                "name": "598-0015",
+                "description": "Background application does not support screenshots",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0016": {
+                "name": "598-0016",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0017": {
+                "name": "598-0017",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0018": {
+                "name": "598-0018",
+                "description": "Background application does not support screenshots",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0019": {
+                "name": "598-0019",
+                "description": "N/A",
+                "message": null,
+                "fix": "N/A",
+                "link": null
+            },
+            "0020": {
+                "name": "598-0020",
+                "description": "Service token present, unable to parsed (likely a Nintendo Network Account)",
+                "message": null,
+                "fix": "Check if you are logging into a PNID and ran the patcher",
+                "link": null
+            }
+        }
+    },
+    "wiiu": {
+        "102": {
+            "2482": {
+                "name": "INVALID_GAME_SERVER_ID",
+                "description": "The game server requested could not be found. Either the game is not supported or is not available in your account environment",
+                "message": "Missing message",
+                "fix": "Check to see if your game is supported at https://pretendo.network/progress. If it is, check your server environment setting at https://pretendo.network/account",
+                "link": "Missing link"
+            },
+            "9999": {
+                "name": "Missing name",
+                "description": "Missing description",
+                "message": "An error has occurred.\n\nPlease try again later.\n\nIf the problem persists, please\nmake a note of the error code and\nvisit support.nintendo.com.",
+                "fix": "Missing fix",
+                "link": "Missing link"
+            }
+        }
+    }
+}
