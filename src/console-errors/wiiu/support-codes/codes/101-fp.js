@@ -67,7 +67,7 @@ module.exports = {
 	'0410': new SupportCode('PYTHON_CORE_VALIDATION_ERROR', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0500': new SupportCode('TRANSPORT_UNDEFINED', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0501': new SupportCode('TRANSPORT_UNKNOWN', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'0502': new SupportCode('TRANSPORT_CONNECTION_FAILURE', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'0502': new SupportCode('TRANSPORT_CONNECTION_FAILURE', 'Couldn\'t connect to the Friends server.', 'Missing message', 'The Pretendo server is likely overloaded. Try again in half an hour.', 'Missing link'),
 	'0503': new SupportCode('TRANSPORT_INVALID_URL', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0504': new SupportCode('TRANSPORT_INVALID_KEY', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'0505': new SupportCode('TRANSPORT_INVALID_URL_TYPE', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),

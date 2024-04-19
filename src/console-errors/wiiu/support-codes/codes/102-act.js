@@ -174,7 +174,7 @@ module.exports = {
 	'2472': new SupportCode('INVALID_CLIENT_ID', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'2473': new SupportCode('INVALID_CLIENT_KEY', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'2481': new SupportCode('INVALID_NEX_CLIENT_ID', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
-	'2482': new SupportCode('INVALID_GAME_SERVER_ID', 'The game server requested could not be found. Either the game is not supported or is not available in your account environment', 'Missing message', 'Check to see if your game is supported at https://pretendo.network/progress. If it is, check your server environment setting at https://pretendo.network/account', 'Missing link'),
+	'2482': new SupportCode('INVALID_GAME_SERVER_ID', 'The game server requested could not be found. Either the game is not supported or is tester-only', 'Missing message', 'Check to see if your game is supported at https://pretendo.network/progress. If you\'re a tester, check your account is set to Beta at https://pretendo.network/account', 'Missing link'),
 	'2483': new SupportCode('GAME_SERVER_ID_ENVIRONMENT_NOT_FOUND', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'2484': new SupportCode('GAME_SERVER_ID_UNIQUE_ID_NOT_LINKED', 'The game server ID and title ID were not linked, or the request did not send a game server ID. This error should never happen normally', 'Missing message', 'File a bug report with as much detail as possible at https://github.com/PretendoNetwork/account/issues/new', 'Missing link'),
 	'2485': new SupportCode('CLIENT_ID_UNIQUE_ID_NOT_LINKED', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
