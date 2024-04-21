@@ -1,48 +1,61 @@
 const Discord = require('discord.js');
-const db = require('../db');
-const { Modal, TextInputComponent, ModalSubmitInteraction } = require('discord-modals');
+const database = require('../database');
 const { button: acceptButton } = require('../buttons/mod-application-accept');
 const { button: denyButton } = require('../buttons/mod-application-deny');
 
-const inServerSince = new TextInputComponent()
-	.setCustomId('experience')
-	.setLabel('Do you have prior experience and if so, what?')
-	.setStyle('SHORT')
-	.setRequired(true);
+const inServerSince = new Discord.TextInputBuilder();
+inServerSince.setCustomId('experience');
+inServerSince.setLabel('Do you have prior experience and if so, what?');
+inServerSince.setStyle(Discord.TextInputStyle.Short);
+inServerSince.setRequired(true);
 
-const timezone = new TextInputComponent()
-	.setCustomId('timezone')
-	.setLabel('What is your timezone?')
-	.setStyle('SHORT')
-	.setRequired(true);
+const timezone = new Discord.TextInputBuilder();
+timezone.setCustomId('timezone');
+timezone.setLabel('What is your timezone?');
+timezone.setStyle(Discord.TextInputStyle.Short);
+timezone.setRequired(true);
 
-const availablity = new TextInputComponent()
-	.setCustomId('availablity')
-	.setLabel('What is your availablity?')
-	.setStyle('SHORT')
-	.setRequired(true);
+const availablity = new Discord.TextInputBuilder();
+availablity.setCustomId('availablity');
+availablity.setLabel('What is your availablity?');
+availablity.setStyle(Discord.TextInputStyle.Short);
+availablity.setRequired(true);
 
-const why = new TextInputComponent()
-	.setCustomId('why')
-	.setLabel('Why do you want to become a moderator?')
-	.setStyle('SHORT')
-	.setRequired(true);
+const why = new Discord.TextInputBuilder();
+why.setCustomId('why');
+why.setLabel('Why do you want to become a moderator?');
+why.setStyle(Discord.TextInputStyle.Short);
+why.setRequired(true);
 
-const extra = new TextInputComponent()
-	.setCustomId('extra')
-	.setLabel('What else can you tell us about yourself?')
-	.setStyle('LONG')
-	.setRequired(true);
+const extra = new Discord.TextInputBuilder();
+extra.setCustomId('extra');
+extra.setLabel('What else can you tell us about yourself?');
+extra.setStyle(Discord.TextInputStyle.Paragraph);
+extra.setRequired(true);
 
+const actionRow1 = new Discord.ActionRowBuilder();
+actionRow1.addComponents(inServerSince);
 
-const modApplicationModal = new Modal()
-	.setCustomId('mod-application')
-	.setTitle('Moderator Application')
-	.addComponents(inServerSince, timezone, availablity, why, extra);
+const actionRow2 = new Discord.ActionRowBuilder();
+actionRow2.addComponents(timezone);
+
+const actionRow3 = new Discord.ActionRowBuilder();
+actionRow3.addComponents(availablity);
+
+const actionRow4 = new Discord.ActionRowBuilder();
+actionRow4.addComponents(why);
+
+const actionRow5 = new Discord.ActionRowBuilder();
+actionRow5.addComponents(extra);
+
+const modApplicationModal = new Discord.ModalBuilder();
+modApplicationModal.setCustomId('mod-application');
+modApplicationModal.setTitle('Moderator Application');
+modApplicationModal.addComponents(actionRow1, actionRow2, actionRow3, actionRow4, actionRow5);
 
 /**
  *
- * @param {ModalSubmitInteraction} interaction
+ * @param {Discord.ModalSubmitInteraction} interaction
  */
 async function modApplicationHandler(interaction) {
 	await interaction.deferReply({
@@ -50,27 +63,27 @@ async function modApplicationHandler(interaction) {
 		ephemeral: true
 	});
 
-	const experience = interaction.getTextInputValue('experience');
-	const timezone = interaction.getTextInputValue('timezone');
-	const availablity = interaction.getTextInputValue('availablity');
-	const why = interaction.getTextInputValue('why');
-	const extra = interaction.getTextInputValue('extra');
+	const experience = interaction.fields.getTextInputValue('experience');
+	const timezone = interaction.fields.getTextInputValue('timezone');
+	const availablity = interaction.fields.getTextInputValue('availablity');
+	const why = interaction.fields.getTextInputValue('why');
+	const extra = interaction.fields.getTextInputValue('extra');
 
 	const applyingMember = await interaction.member.fetch();
 	const guild = await interaction.guild.fetch();
 
-	const channelId = db.getDB().get('mod-applications.channel.log');
+	const channelId = await database.getGuildSetting(interaction.guildId, 'mod_applications_channel_id');
 	const channel = channelId && await guild.channels.fetch(channelId);
 
 	if (!channel) {
 		throw new Error('application failed to submit - channel not setup!');
 	}
 
-	const modApplicationEmbed = new Discord.MessageEmbed();
+	const modApplicationEmbed = new Discord.EmbedBuilder();
 
-	modApplicationEmbed.setColor(0x0096FF);
+	modApplicationEmbed.setColor(0x9D6FF3);
 	modApplicationEmbed.setTitle('Mod Application');
-	modApplicationEmbed.setDescription('A user has submitted a moderator application');
+	modApplicationEmbed.setDescription(`<@${applyingMember.user.id}> has submitted a moderator application`);
 	modApplicationEmbed.setImage('attachment://pending-banner.png');
 	modApplicationEmbed.setThumbnail('attachment://pending-icon.png');
 	modApplicationEmbed.setAuthor({
@@ -105,8 +118,8 @@ async function modApplicationHandler(interaction) {
 	});
 	modApplicationEmbed.setTimestamp(Date.now());
 
-	const row = new Discord.MessageActionRow();
-	row.addComponents([acceptButton, denyButton]);
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(acceptButton, denyButton);
 
 	await channel.send({
 		embeds: [modApplicationEmbed],
@@ -124,7 +137,8 @@ async function modApplicationHandler(interaction) {
 }
 
 module.exports = {
-	name: modApplicationModal.customId,
+	name: modApplicationModal.data.custom_id,
+	cooldown: 1000 * 60 * 60 * 24 * 30, // ~ 1 month
 	modal: modApplicationModal,
 	handler: modApplicationHandler
 };

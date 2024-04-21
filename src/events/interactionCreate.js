@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
 const buttonHandler = require('../handlers/button-handler');
-const commandHandler = require('../handlers/command-handler');
+const chatInputCommandHandler = require('../handlers/chat-input-command-handler');
 const contextMenuHandler = require('../handlers/context-menu-handler');
 const selectMenuHandler = require('../handlers/select-menu-handler');
+const modalSubmitHandler = require('../handlers/modal-submit-handler');
 
 /**
  * 
@@ -10,20 +11,24 @@ const selectMenuHandler = require('../handlers/select-menu-handler');
  */
 async function interactionCreateHander(interaction) {
 	try {
-		if (interaction.isCommand()) {
-			await commandHandler(interaction);
+		if (interaction.isChatInputCommand()) {
+			await chatInputCommandHandler(interaction);
 		}
 
 		if (interaction.isButton()) {
 			await buttonHandler(interaction);
 		}
 
-		if (interaction.isSelectMenu()) {
+		if (interaction.isStringSelectMenu()) {
 			await selectMenuHandler(interaction);
 		}
 
-		if (interaction.isContextMenu()) {
+		if (interaction.isContextMenuCommand()) {
 			await contextMenuHandler(interaction);
+		}
+
+		if (interaction.isModalSubmit()) {
+			await modalSubmitHandler(interaction);
 		}
 	} catch (error) {
 		const payload = {
@@ -37,6 +42,7 @@ async function interactionCreateHander(interaction) {
 			} else {
 				await interaction.reply(payload);
 			}
+			console.log(error);
 		} catch (replyError) {
 			console.log(replyError, error);
 		}

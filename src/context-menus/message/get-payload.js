@@ -23,7 +23,9 @@ async function reportUserHandler(interaction) {
 	await interaction.reply({
 		content: 'Message Payload Attached',
 		files: [
-			new Discord.MessageAttachment(Buffer.from(JSON.stringify(messagePayload)), 'message-payload.json')
+			new Discord.AttachmentBuilder(Buffer.from(JSON.stringify(messagePayload)), {
+				name:'message-payload.json'
+			})
 		],
 		ephemeral: true
 	});
@@ -31,7 +33,7 @@ async function reportUserHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultPermission(false);
+contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
 contextMenu.setName('Get Message Payload');
 contextMenu.setType(ApplicationCommandType.Message);
 

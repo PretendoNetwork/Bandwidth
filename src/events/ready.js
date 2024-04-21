@@ -1,18 +1,24 @@
 const Discord = require('discord.js');
 const glob = require('glob');
 const path = require('path');
+const database = require('../database');
+const pollUtils = require('../utils/polls');
 const { setupGuild } = require('../setup-guild');
 
-/**
- * 
+
+/**train
+ *
  * @param {Discord.Client} client
  */
 async function readyHandler(client) {
+	await database.connect();
+
 	loadBotHandlersCollection('buttons', client.buttons);
 	loadBotHandlersCollection('commands', client.commands);
 	loadBotHandlersCollection('context-menus', client.contextMenus);
 	loadBotHandlersCollection('modals', client.modals);
 	loadBotHandlersCollection('select-menus', client.selectMenus);
+
 	console.log('Registered global commands');
 
 	// setup joined guilds
@@ -24,6 +30,11 @@ async function readyHandler(client) {
 		await setupGuild(guild);
 		console.log(`setup guild: ${guild.name}`);
 	}
+
+	// Start poll refreshing for every minute
+	setInterval(async function() {
+		await pollUtils.updatePolls(client);
+	}, 60000);
 
 	console.log(`Logged in as ${client.user.tag}`);
 }

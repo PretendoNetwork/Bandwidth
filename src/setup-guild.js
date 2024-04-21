@@ -1,9 +1,11 @@
 const Discord = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
-const util = require('./util');
+const timedUtils = require('./utils/timed');
+const database = require('./database');
 const { bot_token: botToken } = require('../config.json');
 const rest = new REST({ version: '10' }).setToken(botToken);
+
 
 /**
  *
@@ -11,19 +13,26 @@ const rest = new REST({ version: '10' }).setToken(botToken);
  */
 async function setupGuild(guild) {
 	// do nothing if the bot does not have the correct permissions
-	if (!guild.me.permissions.has([Discord.Permissions.FLAGS.MANAGE_CHANNELS])) {
+	if (!guild.members.me.permissions.has([Discord.PermissionFlagsBits.ManageChannels])) {
 		console.log('Bot does not have permissions to set up in guild', guild.name);
 		return;
 	}
 
 	// Setup commands
 	await deployCommandsToGuild(guild);
-	
+
 	try {
-		await util.updateMemberCountChannels(guild);
+		await timedUtils.updateMemberCountChannels(guild);
 	} catch {
-		// we dont care if it fails on setup, itll sync again on join
+		// we dont care if it fails on setup, it'll sync again on join
 	}
+
+	// Set up our timer for refreshing the member count (5 minutes)
+	setInterval(async function(){
+		await timedUtils.updateMemberCountChannels(guild);
+	}, 300000);
+
+	await database.initGuild(guild.id);
 }
 
 /**
@@ -42,7 +51,7 @@ async function deployCommandsToGuild(guild) {
 	});
 
 
-	await rest.put(Routes.applicationGuildCommands(guild.me.id, guild.id), {
+	await rest.put(Routes.applicationGuildCommands(guild.members.me.id, guild.id), {
 		body: deploy,
 	});
 }

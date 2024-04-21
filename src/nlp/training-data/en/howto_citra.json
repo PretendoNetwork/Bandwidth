@@ -1,0 +1,11 @@
+{
+	"intent": "howto.citra",
+	"answer": "To get started with Pretendo on Citra, follow the instructions on our website <https://pretendo.network/docs/install/citra>",
+	"utterances": [
+		"Does Pretendo support Citra?",
+		"Can I use Citra?",
+		"How do I use Citra?",
+		"How to get Pretendo on Citra?",
+		"I can't connect with Citra"
+	]
+}
