@@ -31,10 +31,11 @@ async function messageCreateHandler(message) {
 
 			// * Check that the message isn't too long to be sent
 			if (lmaod.length < 2000) {
-				await message.reply({
+				const reply = await message.reply({
 					content: lmaod,
 					allowedMentions: { parse: [] }
 				});
+				await reply.suppressEmbeds(true);
 			} else {
 				await message.reply('Looks like the resulting message is too long :/');
 			}
