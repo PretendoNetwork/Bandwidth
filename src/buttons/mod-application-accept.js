@@ -16,15 +16,20 @@ async function modApplicationAcceptHandler(interaction) {
 	});
 
 	const adminRoleId = await database.getGuildSetting(interaction.guildId, 'admin_role_id');
-
 	if (!adminRoleId) {
 		throw new Error('No admin role ID set!');
 	}
 
-	const hasdAdminRole = interaction.member.roles.cache.get(adminRoleId);
+	const headModRoleId = await database.getGuildSetting(interaction.guildId, 'head_mod_role_id');
+	if (!headModRoleId) {
+		throw new Error('No head mod role ID set!');
+	}
 
-	if (!hasdAdminRole) {
-		throw new Error('Only administrators have permission to accept/deny applications');
+	const hasAdminRole = interaction.member.roles.cache.get(adminRoleId);
+	const hasHeadModRole = interaction.member.roles.cache.get(headModRoleId);
+
+	if (!(hasAdminRole || hasHeadModRole)) {
+		throw new Error('Only administrators and head mods have permission to accept/deny applications');
 	}
 
 	const { message } = interaction;
