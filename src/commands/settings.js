@@ -4,6 +4,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const editableOptions = [
 	'admin_role_id',
+	'head_mod_role_id',
 	'unverified_role_id',
 	'developer_role_id',
 	'mod_applications_channel_id',

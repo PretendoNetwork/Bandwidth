@@ -13,6 +13,7 @@ async function connect() {
 	await database.run(`CREATE TABLE IF NOT EXISTS server_settings (
 		guild_id TEXT,
 		admin_role_id TEXT,
+		head_mod_role_id TEXT,
 		unverified_role_id TEXT,
 		developer_role_id TEXT,
 		mod_applications_channel_id TEXT,
