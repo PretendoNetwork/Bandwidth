@@ -1,12 +1,13 @@
 const path = require('path');
 const sqlite3 = require('sqlite3');
 const sqlite = require('sqlite');
+const { db_path } = require('../config.json');
 
 let database;
 
 async function connect() {
 	database = await sqlite.open({
-		filename: path.join(__dirname, '../database.db'),
+		filename: path.join(__dirname, '..', db_path ?? 'database.db'),
 		driver: sqlite3.Database
 	});
 
