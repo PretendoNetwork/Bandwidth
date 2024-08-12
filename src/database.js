@@ -1,12 +1,18 @@
 const path = require('path');
+const fs = require('fs');
 const sqlite3 = require('sqlite3');
 const sqlite = require('sqlite');
+const { db_path } = require('../config.json');
 
 let database;
 
+const resolvedDbPath = db_path ?? path.join(__dirname, '../database.db');
+const dbFolder = path.dirname(resolvedDbPath);
+fs.mkdirSync(dbFolder, { recursive: true });
+
 async function connect() {
 	database = await sqlite.open({
-		filename: path.join(__dirname, '../database.db'),
+		filename: resolvedDbPath,
 		driver: sqlite3.Database
 	});
 
