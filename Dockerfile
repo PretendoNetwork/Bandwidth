@@ -7,7 +7,7 @@ ARG app_dir="/home/node/app"
 FROM node:20-alpine AS base
 ARG app_dir
 WORKDIR ${app_dir}
-RUN apk add --no-cache python3 make gcc g++
+RUN apk add --no-cache python3 py3-pip make gcc g++
 
 # * Installing production dependencies
 FROM base AS dependencies
