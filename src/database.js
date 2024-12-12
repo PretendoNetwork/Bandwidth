@@ -23,6 +23,10 @@ async function connect() {
 		unverified_role_id TEXT,
 		developer_role_id TEXT,
 		mod_applications_channel_id TEXT,
+		vc_mod_apps_channel_id TEXT,
+		forum_mod_apps_channel_id TEXT,
+		network_mod_apps_channel_id TEXT,
+		juxt_mod_apps_channel_id TEXT,
 		reports_channel_id TEXT,
 		readme_channel_id TEXT,
 		rules_channel_id TEXT,
@@ -34,14 +38,46 @@ async function connect() {
 		UNIQUE(guild_id)
 	)`);
 
-	// This adds an ay_lmao_disabled column to the server settings table, if missing.
+	// This adds items to the server settings table, if missing.
 	let hasAyLmaoColumn = false;
+	let hasVCModApps = false;
+	let hasForumModApps = false;
+	let hasNetworkModApps = false;
+	let hasJuxtModApps = false;
 	await database.each('SELECT * FROM pragma_table_info(\'server_settings\')', (_err, row) => {
-		if (row.name === 'ay_lmao_disabled') hasAyLmaoColumn = true;
+		switch(row.name) {
+			case 'ay_lmao_disabled':
+				hasAyLmaoColumn = true;
+				break;
+			case 'vc_mod_apps_channel_id':
+				hasVCModApps = true;
+				break;
+			case 'forum_mod_apps_channel_id':
+				hasForumModApps = true;
+				break;
+			case 'network_mod_apps_channel_id':
+				hasNetworkModApps = true;
+				break;
+			case 'juxt_mod_apps_channel_id':
+				hasJuxtModApps = true;
+				break;
+		}
 	});
 
 	if (!hasAyLmaoColumn) {
 		await database.run('ALTER TABLE server_settings ADD ay_lmao_disabled INTEGER DEFAULT 0 NOT NULL;');
+	}
+	if (!hasVCModApps) {
+		await database.run('ALTER TABLE server_settings ADD vc_mod_apps_channel_id TEXT;');
+	}
+	if (!hasForumModApps) {
+		await database.run('ALTER TABLE server_settings ADD forum_mod_apps_channel_id TEXT;');
+	}
+	if (!hasNetworkModApps) {
+		await database.run('ALTER TABLE server_settings ADD network_mod_apps_channel_id TEXT;');
+	}
+	if (!hasJuxtModApps) {
+		await database.run('ALTER TABLE server_settings ADD juxt_mod_apps_channel_id TEXT;');
 	}
 
 	await database.run(`CREATE TABLE IF NOT EXISTS nlp_disabled (
