@@ -63,6 +63,7 @@ async function modApplicationHandler(interaction) {
 		ephemeral: true
 	});
 
+	const modType = interaction.customId.split('-').pop();
 	const experience = interaction.fields.getTextInputValue('experience');
 	const timezone = interaction.fields.getTextInputValue('timezone');
 	const availablity = interaction.fields.getTextInputValue('availablity');
@@ -72,7 +73,26 @@ async function modApplicationHandler(interaction) {
 	const applyingMember = await interaction.member.fetch();
 	const guild = await interaction.guild.fetch();
 
-	const channelId = await database.getGuildSetting(interaction.guildId, 'mod_applications_channel_id');
+	var selectedDBItem = '';
+	switch(modType) {
+		case 'discord':
+			selectedDBItem = 'mod_applications_channel_id';
+			break;
+		case 'vc':
+			selectedDBItem = 'vc_mod_apps_channel_id';
+			break;
+		case 'forum':
+			selectedDBItem = 'forum_mod_apps_channel_id';
+			break;
+		case 'network':
+			selectedDBItem = 'network_mod_apps_channel_id';
+			break;
+		case 'juxt':
+			selectedDBItem = 'juxt_mod_apps_channel_id';
+			break;
+	}
+
+	const channelId = await database.getGuildSetting(interaction.guildId, selectedDBItem);
 	const channel = channelId && await guild.channels.fetch(channelId);
 
 	if (!channel) {
@@ -82,8 +102,25 @@ async function modApplicationHandler(interaction) {
 	const modApplicationEmbed = new Discord.EmbedBuilder();
 
 	modApplicationEmbed.setColor(0x9D6FF3);
-	modApplicationEmbed.setTitle('Mod Application');
-	modApplicationEmbed.setDescription(`<@${applyingMember.user.id}> has submitted a moderator application`);
+
+	switch(modType) {
+		case 'discord':
+			modApplicationEmbed.setTitle('Discord Mod Application');
+			break;
+		case 'vc':
+			modApplicationEmbed.setTitle('VC Mod Application');
+			break;
+		case 'forum':
+			modApplicationEmbed.setTitle('Forum Mod Application');
+			break;
+		case 'network':
+			modApplicationEmbed.setTitle('Network Mod Application');
+			break;
+		case 'juxt':
+			modApplicationEmbed.setTitle('Juxt Mod Application');
+			break;
+	}
+	modApplicationEmbed.setDescription(`<@${applyingMember.user.id}> has submitted a ${modType} moderator application`);
 	modApplicationEmbed.setImage('attachment://pending-banner.png');
 	modApplicationEmbed.setThumbnail('attachment://pending-icon.png');
 	modApplicationEmbed.setAuthor({
