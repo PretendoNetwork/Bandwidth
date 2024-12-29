@@ -190,6 +190,7 @@ module.exports = {
 	'5361': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'5362': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'5363': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
+	'5432': new SupportCode('UNKNOWN_ACCOUNT_ERROR', 'An unknown account error has occured', 'Missing message', 'On Nimbus switch to Nintendo and open the eShop. After that switch back to Pretendo and try again. It can be this fix does not work at the first time so if it is not working try again', 'Missing link'),
 	'5502': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'5503': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
 	'5504': new SupportCode('Missing name', 'Missing description', 'Missing message', 'Missing fix', 'Missing link'),
