@@ -25,10 +25,10 @@ const command = new SlashCommandBuilder()
 			.setRequired(true)
 			.addChoices(
 				{ name: 'Discord Moderator', value: 'discord' },
-				{ name: 'Discord VC Moderator', value: 'vc' },
-				{ name: 'Forum Moderator', value: 'forum' },
-				{ name: 'Network Moderator', value: 'network' },
-				{ name: 'Juxtaposition Moderator', value: 'juxt' }
+				{ name: 'Discord VC Moderator', value: 'vc' }
+				//{ name: 'Forum Moderator', value: 'forum' },
+				//{ name: 'Network Moderator', value: 'network' },
+				//{ name: 'Juxtaposition Moderator', value: 'juxt' }
 			));
 
 module.exports = {
