@@ -1,24 +1,26 @@
 const Discord = require('discord.js');
 const { ContextMenuCommandBuilder } = require('@discordjs/builders');
 const { ApplicationCommandType } = require('discord-api-types/v10');
-const db = require('../../db');
+const database = require('../../database');
 
 /**
  *
  * @param {Discord.ContextMenuInteraction} interaction
  */
 async function warnPiracyHandler(interaction) {
+	const reportsChannelId = await database.getGuildSetting(interaction.guildId, 'reports_channel_id');
 	const channels = await interaction.guild.channels.fetch();
-	const reportsChannel = channels.find(channel => channel.id === db.getDB().get('report.channel.log'));
+	const reportsChannel = channels.find(channel => channel.id === reportsChannelId);
 
 	if (!reportsChannel) {
 		throw new Error('Report failed to submit - channel not setup');
 	}
 
-	const warnPiracyEmbed = new Discord.MessageEmbed();
+	const warnPiracyEmbed = new Discord.EmbedBuilder();
+	warnPiracyEmbed.setColor(0xF36F8A);
 	warnPiracyEmbed.setThumbnail('attachment://piracy.png');
 	warnPiracyEmbed.setTitle('Piracy Warning');
-	warnPiracyEmbed.setDescription('A user has reported this message as pertaining to piracy. Pretendo Network does not support piracy of any kind. Talking about piracy is prohinbited. This includes, but is not limited to:\n\n- Sharing game/firmware dumps\n- Sharing console SDK (software development kit) leaks/tools\n- Sharing tools used to acquire pirated content (cdn downloads, warez sites, etc)\n\n_This action has been logged. If you believe this to have been done unfairly please contact a staff member_');
+	warnPiracyEmbed.setDescription('A user has reported this message as pertaining to piracy. Pretendo Network does not support piracy of any kind. Talking about piracy is prohibited. This includes, but is not limited to:\n\n- Sharing game/firmware dumps\n- Sharing console SDK (software development kit) leaks/tools\n- Sharing tools used to acquire pirated content (cdn downloads, warez sites, etc)\n\n_This action has been logged. If you believe this to have been done unfairly please contact a staff member_');
 
 	const message = await interaction.channel.messages.fetch(interaction.targetId);
 
@@ -39,53 +41,26 @@ async function warnPiracyHandler(interaction) {
 		]
 	});
 
-	const reportEmbed = new Discord.MessageEmbed();
+	const reportEmbed = new Discord.EmbedBuilder();
 
-	reportEmbed.setColor(0xC0C0C0);
+	reportEmbed.setColor(0xF36F8A);
 	reportEmbed.setTitle('User Report');
 	reportEmbed.setDescription('――――――――――――――――――――――――――――――――――');
 	reportEmbed.setFields(
 		{
 			name: 'Target User',
-			value: `<@${message.author.id}>`,
+			value: `<@${message.author.id}>\n${message.author.id}`,
 			inline: true
-		},
-		{
-			name: 'Target User ID',
-			value: message.author.id,
-			inline: true
-		},
-		{
-			name: '\u200b',
-			value: '\u200b'
 		},
 		{
 			name: 'Reporting User',
-			value: `<@${interaction.member.id}>`,
+			value: `<@${interaction.member.id}>\n${interaction.member.id}`,
 			inline: true
 		},
 		{
-			name: 'Reporting User ID',
-			value: interaction.member.id,
+			name: 'Channel',
+			value: `<#${interaction.channelId}>\n${interaction.channel.name}`,
 			inline: true
-		},
-		{
-			name: '\u200b',
-			value: '\u200b'
-		},
-		{
-			name: 'Channel Tag',
-			value: `<#${interaction.channelId}>`,
-			inline: true
-		},
-		{
-			name: 'Channel Name',
-			value: interaction.channel.name,
-			inline: true
-		},
-		{
-			name: '\u200b',
-			value: '\u200b'
 		},
 		{
 			name: 'Reason',
@@ -94,7 +69,7 @@ async function warnPiracyHandler(interaction) {
 		},
 		{
 			name: 'Message',
-			value: message.content,
+			value: message.content.substring(0, 1024),
 			inline: true
 		}
 	);
@@ -104,7 +79,18 @@ async function warnPiracyHandler(interaction) {
 	});
 	reportEmbed.setTimestamp(Date.now());
 
+	const jumpButton = new Discord.ButtonBuilder();
+
+	jumpButton.setLabel('Jump!');
+	jumpButton.setStyle(Discord.ButtonStyle.Link);
+	jumpButton.setEmoji('📨');
+	jumpButton.setURL(message.url);
+
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(jumpButton);
+
 	await reportsChannel.send({
+		components: [row],
 		embeds: [reportEmbed]
 	});
 
@@ -116,7 +102,7 @@ async function warnPiracyHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultPermission(true);
+contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
 contextMenu.setName('Warn Piracy');
 contextMenu.setType(ApplicationCommandType.Message);
 

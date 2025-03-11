@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const { ContextMenuCommandBuilder } = require('@discordjs/builders');
 const { ApplicationCommandType } = require('discord-api-types/v10');
-const { showModal } = require('discord-modals');
 const { modal: reportUserModal } = require('../../modals/report-user');
 
 /**
@@ -9,7 +8,6 @@ const { modal: reportUserModal } = require('../../modals/report-user');
  * @param {Discord.ContextMenuInteraction} interaction
  */
 async function reportUserHandler(interaction) {
-	// TODO report user should also be an command, context menus are not available on mobile
 	const { targetId } = interaction;
 
 	if (targetId === interaction.user.id) {
@@ -30,10 +28,10 @@ async function reportUserHandler(interaction) {
 		return;
 	}
 
-	reportUserModal.setCustomId(`${reportUserModal.customId}-${targetId}`);
+	reportUserModal.setCustomId(`${reportUserModal.data.custom_id}-${targetId}`);
 	reportUserModal.setTitle(`Reporting ${targetMember.user.tag}`);
 
-	showModal(reportUserModal, {
+	interaction.showModal(reportUserModal, {
 		client: interaction.client,
 		interaction: interaction
 	});
@@ -41,7 +39,7 @@ async function reportUserHandler(interaction) {
 
 const contextMenu = new ContextMenuCommandBuilder();
 
-contextMenu.setDefaultPermission(true);
+contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
 contextMenu.setName('Report User');
 contextMenu.setType(ApplicationCommandType.User);
 

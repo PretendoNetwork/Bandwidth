@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
-const db = require('../db');
+const database = require('../database');
 
-const acceptButton = new Discord.MessageButton();
+const acceptButton = new Discord.ButtonBuilder();
 acceptButton.setCustomId('mod-application-accept');
 acceptButton.setLabel('Accept');
-acceptButton.setStyle('SUCCESS');
+acceptButton.setStyle(Discord.ButtonStyle.Success);
 
 /**
  *
@@ -15,32 +15,40 @@ async function modApplicationAcceptHandler(interaction) {
 		ephemeral: true
 	});
 
-	const adminRoleId = db.getDB().get('roles.admin');
-
+	const adminRoleId = await database.getGuildSetting(interaction.guildId, 'admin_role_id');
 	if (!adminRoleId) {
 		throw new Error('No admin role ID set!');
 	}
 
-	const hasdAdminRole = interaction.member.roles.cache.get(adminRoleId);
+	const headModRoleId = await database.getGuildSetting(interaction.guildId, 'head_mod_role_id');
+	if (!headModRoleId) {
+		throw new Error('No head mod role ID set!');
+	}
 
-	if (!hasdAdminRole) {
-		throw new Error('Only administrators have permission to accept/deny applications');
+	const hasAdminRole = interaction.member.roles.cache.get(adminRoleId);
+	const hasHeadModRole = interaction.member.roles.cache.get(headModRoleId);
+
+	if (!(hasAdminRole || hasHeadModRole)) {
+		throw new Error('Only administrators and head mods have permission to accept/deny applications');
 	}
 
 	const { message } = interaction;
-	const modApplicationEmbed = message.embeds[0];
+	const modApplicationEmbed = new Discord.EmbedBuilder(message.embeds[0].toJSON());
 	const rowOld = message.components[0];
 	const [acceptButtonOld, denyButtonOld] = rowOld.components;
 
-	modApplicationEmbed.setColor(0x2D992D);
+	modApplicationEmbed.setColor(0x6FF38E);
 	modApplicationEmbed.setImage('attachment://accepted-banner.png');
 	modApplicationEmbed.setThumbnail('attachment://accepted-icon.png');
 
-	acceptButtonOld.setDisabled();
-	denyButtonOld.setDisabled();
+	const acceptButtonNew = new Discord.ButtonBuilder(acceptButtonOld.toJSON());
+	const denyButtonNew = new Discord.ButtonBuilder(denyButtonOld.toJSON());
 
-	const row = new Discord.MessageActionRow();
-	row.addComponents([acceptButtonOld, denyButtonOld]);
+	acceptButtonNew.setDisabled();
+	denyButtonNew.setDisabled();
+
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(acceptButtonNew, denyButtonNew);
 
 	await message.edit({
 		embeds: [modApplicationEmbed],
@@ -58,7 +66,7 @@ async function modApplicationAcceptHandler(interaction) {
 }
 
 module.exports = {
-	name: acceptButton.customId,
+	name: acceptButton.data.custom_id,
 	button: acceptButton,
 	handler: modApplicationAcceptHandler
 };

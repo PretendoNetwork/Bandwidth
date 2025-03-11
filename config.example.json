@@ -1,4 +1,19 @@
 {
-  "bot_token": "TOKEN",
-  "application_id": "APPID"
+  "bot_token": "BOT_TOKEN",
+  "application_id": "BOT_APP_ID",
+  "public_key": "BOT_PUBLIC_KEY",
+  "db_path": "database.db",
+  "nlp": {
+    "force_train": true,
+    "manager": {
+      "languages": [
+        "en"
+      ],
+      "forceNER": true,
+      "nlu": {
+        "log": false,
+        "useNoneFeature": true
+      }
+    }
+  }
 }

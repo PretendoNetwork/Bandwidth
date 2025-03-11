@@ -1,22 +1,21 @@
-//const Discord = require('discord.js');
-const { Modal, ModalSubmitInteraction } = require('discord-modals');
+const Discord = require('discord.js');
 
-const editMessageModal = new Modal();
+const editMessageModal = new Discord.ModalBuilder();
 editMessageModal.setCustomId('edit-message');
-editMessageModal.setTitle('Edit message sent as Yamamura');
+editMessageModal.setTitle('Edit message sent as Bandwidth');
 
 /**
  *
- * @param {ModalSubmitInteraction} interaction
+ * @param {Discord.ModalSubmitInteraction} interaction
  */
 async function editMessageHandler(interaction) {
 	await interaction.deferReply({
 		content: 'Thinking...',
 		ephemeral: true
 	});
-	
-	const messageId = interaction.getTextInputValue('message-id').trim();
-	const payload = interaction.getTextInputValue('payload').trim();
+
+	const messageId = interaction.fields.getTextInputValue('message-id').trim();
+	const payload = interaction.fields.getTextInputValue('payload').trim();
 
 	const message = await interaction.channel.messages.fetch(messageId);
 	const messagePayload = JSON.parse(payload);
@@ -29,7 +28,7 @@ async function editMessageHandler(interaction) {
 }
 
 module.exports = {
-	name: editMessageModal.customId,
+	name: editMessageModal.data.custom_id,
 	modal: editMessageModal,
 	handler: editMessageHandler
 };

@@ -1,0 +1,11 @@
+{
+	"intent": "howto.cemu",
+	"answer": "To get started with Pretendo on Cemu, follow the instructions on our website <https://pretendo.network/docs/install/cemu>",
+	"utterances": [
+		"Does Pretendo support Cemu?",
+		"Can I use Cemu?",
+		"How do I use Cemu?",
+		"How to get Pretendo on Cemu?",
+		"I can't connect with Cemu"
+	]
+}

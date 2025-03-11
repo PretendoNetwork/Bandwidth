@@ -26,7 +26,7 @@ async function toggleroleHandler(interaction) {
 	}
 
 	const hasRole = member.roles.cache.has(role.id);
-	
+
 	if (hasRole) {
 		await member.roles.remove(role);
 	} else {
@@ -41,15 +41,17 @@ async function toggleroleHandler(interaction) {
 
 const command = new SlashCommandBuilder();
 
-command.setDefaultPermission(true);
+command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
 command.setName('togglerole');
 command.setDescription('Toggle user roles');
 command.addStringOption(option => {
 	option.setName('role');
 	option.setDescription('Role to toggle');
 	option.setRequired(true);
-	option.addChoice('@Updates', 'updates');
-	option.addChoice('@StreamPing', 'streamping');
+	option.addChoices(
+		{ name: '@Updates', value: 'updates' },
+		{ name: '@StreamPing', value: 'streamping' }
+	);
 
 	return option;
 });

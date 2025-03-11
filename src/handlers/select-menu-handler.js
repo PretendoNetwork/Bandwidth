@@ -9,7 +9,7 @@ async function selectMenuHandler(interaction) {
 
 	/** @type {Discord.Collection} */
 	const selectMenus = interaction.client.selectMenus;
-	const selectMenu = selectMenus.get(customId);
+	const selectMenu = selectMenus.find(selectMenu => customId.startsWith(selectMenu.name)); // hack to be able to append extra metadata to selections
 
 	// do nothing if no selectMenu
 	if (!selectMenu) {

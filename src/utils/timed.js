@@ -1,17 +1,16 @@
 const Discord = require('discord.js');
-const db = require('./db');
+const database = require('../database');
 
 /**
- * 
+ *
  * @param {Discord.Guild} guild
  */
 async function updateMemberCountChannels(guild) {
-	// TODO this should really done on interval, a bot raid will ratelimit the bot so it cant take any more actions for a while
-	// (this is on global ratelimit iirc)
 
-	const memberChannelId = db.getDB().get('stats.channels.members');
-	const peopleChannelId = db.getDB().get('stats.channels.people');
-	const botsChannelId = db.getDB().get('stats.channels.bots');
+	const memberChannelId = await database.getGuildSetting(guild.id, 'stats_members_channel_id');
+	const peopleChannelId = await database.getGuildSetting(guild.id, 'stats_people_channel_id');
+	const botsChannelId = await database.getGuildSetting(guild.id, 'stats_bots_channel_id');
+
 	const membersChannel = memberChannelId && await guild.channels.fetch(memberChannelId);
 	const peopleChannel = memberChannelId && await guild.channels.fetch(peopleChannelId);
 	const botsChannel = memberChannelId && await guild.channels.fetch(botsChannelId);

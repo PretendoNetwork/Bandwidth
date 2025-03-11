@@ -1,16 +1,25 @@
 const Discord = require('discord.js');
-const db = require('../db');
+const database = require('../database');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const editableOptions = [
-	'mod-applications.channel.log',
-	'report.channel.log',
-	'joinmsg.channels.readme',
-	'joinmsg.channels.rules',
-	'stats.channels.members',
-	'stats.channels.people',
-	'stats.channels.bots',
-	'roles.admin',
+	'admin_role_id',
+	'head_mod_role_id',
+	'unverified_role_id',
+	'developer_role_id',
+	'mod_applications_channel_id',
+	'vc_mod_apps_channel_id',
+	'forum_mod_apps_channel_id',
+	'network_mod_apps_channel_id',
+	'juxt_mod_apps_channel_id',
+	'reports_channel_id',
+	'readme_channel_id',
+	'rules_channel_id',
+	'stats_members_channel_id',
+	'stats_people_channel_id',
+	'stats_bots_channel_id',
+	'uploaded_network_dumps_channel_id',
+	'ay_lmao_disabled'
 ];
 
 async function verifyInputtedKey(interaction) {
@@ -25,16 +34,21 @@ async function verifyInputtedKey(interaction) {
  * @param {Discord.CommandInteraction} interaction
  */
 async function settingsHandler(interaction) {
+	const { guildId } = interaction;
 	const key = interaction.options.getString('key');
+
 	if (interaction.options.getSubcommand() === 'get') {
 		await verifyInputtedKey(interaction);
+
+		const value = await database.getGuildSetting(guildId, key);
+
 		// this is hellish string concatenation, I know
 		await interaction.reply({
 			content:
-				'```\n' + key + '=' + '\'' + `${db.getDB().get(key)}` + '\'' + '\n```',
+				'```\n' + key + '=' + '\'' + `${value}` + '\'' + '\n```',
 			ephemeral: true,
 			allowedMentions: {
-				parse: [], // dont allow tagging anything
+				parse: [], // * Dont allow tagging anything
 			},
 		});
 		return;
@@ -42,22 +56,10 @@ async function settingsHandler(interaction) {
 
 	if (interaction.options.getSubcommand() === 'set') {
 		await verifyInputtedKey(interaction);
-		db.getDB().set(key, interaction.options.getString('value'));
+
+		await database.updateGuildSetting(guildId, key, interaction.options.getString('value'));
 		await interaction.reply({
 			content: `setting \`${key}\` has been saved successfully`,
-			ephemeral: true,
-			allowedMentions: {
-				parse: [], // dont allow tagging anything
-			},
-		});
-		return;
-	}
-
-	if (interaction.options.getSubcommand() === 'which') {
-		await interaction.reply({
-			content: `**possible settings**:\n${editableOptions
-				.map((v) => `\`${v}\``)
-				.join('\n')}`,
 			ephemeral: true,
 			allowedMentions: {
 				parse: [], // dont allow tagging anything
@@ -71,7 +73,7 @@ async function settingsHandler(interaction) {
 
 const command = new SlashCommandBuilder();
 
-command.setDefaultPermission(false);
+command.setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator);
 command.setName('settings');
 command.setDescription('Setup the bot');
 command.addSubcommand((cmd) => {
@@ -81,6 +83,13 @@ command.addSubcommand((cmd) => {
 		option.setName('key');
 		option.setDescription('Key to modify');
 		option.setRequired(true);
+
+		for (const setting in editableOptions) {
+			option.addChoices({
+				name: editableOptions[setting],
+				value: editableOptions[setting]
+			});
+		}
 		return option;
 	});
 	cmd.addStringOption((option) => {
@@ -98,13 +107,15 @@ command.addSubcommand((cmd) => {
 		option.setName('key');
 		option.setDescription('Key to modify');
 		option.setRequired(true);
+
+		for (const setting in editableOptions) {
+			option.addChoices({
+				name: editableOptions[setting],
+				value: editableOptions[setting]
+			});
+		}
 		return option;
 	});
-	return cmd;
-});
-command.addSubcommand((cmd) => {
-	cmd.setName('which');
-	cmd.setDescription('which settings are valid?');
 	return cmd;
 });
 

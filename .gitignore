@@ -60,3 +60,5 @@ typings/
 # custom
 config.json
 db.json
+database.db
+network-dumps-tmp

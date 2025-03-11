@@ -1,22 +1,24 @@
-//const Discord = require('discord.js');
-const { Modal, TextInputComponent, ModalSubmitInteraction } = require('discord-modals');
+const Discord = require('discord.js');
 
-const payload = new TextInputComponent();
-payload.setCustomId('payload');
-payload.setStyle('LONG');
-payload.setLabel('Message Payload');
-payload.setPlaceholder('http://discohook.org & https://discord.com/developers/docs/resources/channel#message-object for help');
-payload.setDefaultValue('{\n\t"content": null,\n\t"embeds": [],\n\t"attachments": [],\n\t"components": []\n}');
-payload.setRequired(true);
+const payloadTextInput = new Discord.TextInputBuilder();
+payloadTextInput.setCustomId('payload');
+payloadTextInput.setStyle(Discord.TextInputStyle.Paragraph);
+payloadTextInput.setLabel('Message Payload');
+payloadTextInput.setPlaceholder('http://discohook.org & https://discord.com/developers/docs/resources/channel#message-object for help');
+payloadTextInput.setValue('{\n\t"content": null,\n\t"embeds": [],\n\t"attachments": [],\n\t"components": []\n}');
+payloadTextInput.setRequired(true);
 
-const sendMessageModal = new Modal();
+const actionRow = new Discord.ActionRowBuilder();
+actionRow.addComponents(payloadTextInput);
+
+const sendMessageModal = new Discord.ModalBuilder();
 sendMessageModal.setCustomId('send-message');
-sendMessageModal.setTitle('Send message as Yamamura');
-sendMessageModal.addComponents(payload);
+sendMessageModal.setTitle('Send message as Bandwidth');
+sendMessageModal.addComponents(actionRow);
 
 /**
  *
- * @param {ModalSubmitInteraction} interaction
+ * @param {Discord.ModalSubmitInteraction} interaction
  */
 async function sendMessageHandler(interaction) {
 	await interaction.deferReply({
@@ -24,7 +26,7 @@ async function sendMessageHandler(interaction) {
 		ephemeral: true
 	});
 
-	const payload = interaction.getTextInputValue('payload').trim();
+	const payload = interaction.fields.getTextInputValue('payload').trim();
 
 	const messagePayload = JSON.parse(payload);
 	await interaction.channel.send(messagePayload);
@@ -36,7 +38,7 @@ async function sendMessageHandler(interaction) {
 }
 
 module.exports = {
-	name: sendMessageModal.customId,
+	name: sendMessageModal.data.custom_id,
 	modal: sendMessageModal,
 	handler: sendMessageHandler
 };

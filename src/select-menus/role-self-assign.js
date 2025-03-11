@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-const roleSelectMenu = new Discord.MessageSelectMenu();
+const roleSelectMenu = new Discord.StringSelectMenuBuilder();
 roleSelectMenu.setCustomId('role-self-assign');
 roleSelectMenu.setMaxValues(1);
 roleSelectMenu.setPlaceholder('Select a role to toggle');
@@ -34,7 +34,7 @@ async function roleSelfAssignHandler(interaction) {
 
 	if (!role) {
 		await interaction.followUp({
-			content: 'Unable to find the requested role. Contact and admin as soon as possible',
+			content: 'Unable to find the requested role. Contact an admin as soon as possible',
 			ephemeral: true
 		});
 
@@ -51,8 +51,8 @@ async function roleSelfAssignHandler(interaction) {
 
 	const { message } = interaction;
 
-	const row = new Discord.MessageActionRow();
-	row.addComponents([roleSelectMenu]);
+	const row = new Discord.ActionRowBuilder();
+	row.addComponents(roleSelectMenu);
 
 	await message.edit({
 		components: [row]
@@ -65,7 +65,7 @@ async function roleSelfAssignHandler(interaction) {
 }
 
 module.exports = {
-	name: roleSelectMenu.customId,
+	name: roleSelectMenu.data.custom_id,
 	select_menu: roleSelectMenu,
 	handler: roleSelfAssignHandler
 };
