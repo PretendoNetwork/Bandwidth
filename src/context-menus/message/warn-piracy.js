@@ -103,12 +103,12 @@ async function warnPiracyHandler(interaction) {
 const contextMenu = new ContextMenuCommandBuilder();
 
 contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
-contextMenu.setName('Warn Piracy');
+contextMenu.setName('Report Piracy');
 contextMenu.setType(ApplicationCommandType.Message);
 
 module.exports = {
 	name: contextMenu.name,
-	help: 'Flag a message as relating to piracy. This action will be recorded with the information about yourself and the author of the message to prevent abuse.\n```\nUsage: Right click a message and navigate to \'Apps > Warn Piracy\'\n```',
+	help: 'Flag a message as relating to piracy. This action will be recorded with the information about yourself and the author of the message to prevent abuse.\n```\nUsage: Right click a message and navigate to \'Apps > Report Piracy\'\n```',
 	handler: warnPiracyHandler,
 	deploy: contextMenu.toJSON()
 };
