@@ -64,7 +64,7 @@ async function warnPiracyHandler(interaction) {
 		},
 		{
 			name: 'Reason',
-			value: 'Piracy Warning',
+			value: 'Piracy',
 			inline: true
 		},
 		{
