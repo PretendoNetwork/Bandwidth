@@ -19,7 +19,7 @@ async function warnPiracyHandler(interaction) {
 	const warnPiracyEmbed = new Discord.EmbedBuilder();
 	warnPiracyEmbed.setColor(0xF36F8A);
 	warnPiracyEmbed.setThumbnail('attachment://piracy.png');
-	warnPiracyEmbed.setTitle('Piracy Warning');
+	warnPiracyEmbed.setTitle('Potential Piracy Reported');
 	warnPiracyEmbed.setDescription('A user has reported this message as pertaining to piracy. Pretendo Network does not support piracy of any kind. Talking about piracy is prohibited. This includes, but is not limited to:\n\n- Sharing game/firmware dumps\n- Sharing console SDK (software development kit) leaks/tools\n- Sharing tools used to acquire pirated content (cdn downloads, warez sites, etc)\n\n_This action has been logged. If you believe this to have been done unfairly please contact a staff member_');
 
 	const message = await interaction.channel.messages.fetch(interaction.targetId);
@@ -64,7 +64,7 @@ async function warnPiracyHandler(interaction) {
 		},
 		{
 			name: 'Reason',
-			value: 'Piracy Warning',
+			value: 'Piracy',
 			inline: true
 		},
 		{
@@ -103,12 +103,12 @@ async function warnPiracyHandler(interaction) {
 const contextMenu = new ContextMenuCommandBuilder();
 
 contextMenu.setDefaultMemberPermissions(Discord.PermissionFlagsBits.SendMessages);
-contextMenu.setName('Warn Piracy');
+contextMenu.setName('Report Piracy');
 contextMenu.setType(ApplicationCommandType.Message);
 
 module.exports = {
 	name: contextMenu.name,
-	help: 'Flag a message as relating to piracy. This action will be recorded with the information about yourself and the author of the message to prevent abuse.\n```\nUsage: Right click a message and navigate to \'Apps > Warn Piracy\'\n```',
+	help: 'Report a message as relating to piracy. This action will be recorded with the information about yourself and the author of the message to prevent abuse.\n```\nUsage: Right click a message and navigate to \'Apps > Report Piracy\'\n```',
 	handler: warnPiracyHandler,
 	deploy: contextMenu.toJSON()
 };
