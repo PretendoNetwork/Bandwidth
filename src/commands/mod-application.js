@@ -107,10 +107,10 @@ const command = new SlashCommandBuilder()
 			.setRequired(true)
 			.addChoices(
 				{ name: 'Discord Moderator', value: 'discord' },
-				{ name: 'Discord VC Moderator', value: 'vc' },
-				{ name: 'Forum Moderator', value: 'forum' }
+				//{ name: 'Discord VC Moderator', value: 'vc' },
+				{ name: 'Forum Moderator', value: 'forum' },
 				//{ name: 'Network Moderator', value: 'network' },
-				//{ name: 'Juxtaposition Moderator', value: 'juxt' }
+				{ name: 'Juxtaposition Moderator', value: 'juxt' }
 			))
 	.addStringOption(option =>
 		option.setName('18-or-older')
@@ -119,8 +119,6 @@ const command = new SlashCommandBuilder()
 			.addChoices(
 				{ name: 'Yes', value: 'yes' },
 				{ name: 'No', value: 'no' }
-				//{ name: 'Network Moderator', value: 'network' },
-				//{ name: 'Juxtaposition Moderator', value: 'juxt' }
 			));
 
 module.exports = {
