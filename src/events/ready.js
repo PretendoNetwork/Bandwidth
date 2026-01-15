@@ -38,7 +38,7 @@ async function readyHandler(client) {
 
 	console.log(`Logged in as ${client.user.tag}`);
 
-	client?.user?.setPresence({ activities: [{ name: '#modmail for moderation concerns', type: ActivityType.Listening }], status: PresenceUpdateStatus.Online });
+	client?.user?.setPresence({ activities: [{ name: '#modmail for moderation concerns', type: Discord.ActivityType.Listening }], status: Discord.PresenceUpdateStatus.Online });
 }
 
 /**
