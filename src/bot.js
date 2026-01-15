@@ -16,7 +16,8 @@ const client = new Discord.Client({
 		Discord.GatewayIntentBits.MessageContent,
 	],
 	partials: [
-		Discord.Partials.Channel
+		Discord.Partials.Channel,
+		Discord.Partials.Message
 	]
 });
 
