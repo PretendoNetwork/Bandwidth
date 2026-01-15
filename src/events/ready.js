@@ -37,6 +37,8 @@ async function readyHandler(client) {
 	}, 60000);
 
 	console.log(`Logged in as ${client.user.tag}`);
+
+	client?.user?.setPresence({ activities: [{ name: '#modmail for moderation concerns', type: ActivityType.Listening }], status: PresenceUpdateStatus.Online });
 }
 
 /**
