@@ -20,7 +20,7 @@ async function warnPiracyHandler(interaction) {
 	warnPiracyEmbed.setColor(0xF36F8A);
 	warnPiracyEmbed.setThumbnail('attachment://piracy.png');
 	warnPiracyEmbed.setTitle('Potential Piracy Reported');
-	warnPiracyEmbed.setDescription('A user has reported this message as pertaining to piracy. Pretendo Network does not support piracy of any kind. Talking about piracy is prohibited. This includes, but is not limited to:\n\n- Sharing game/firmware dumps\n- Sharing console SDK (software development kit) leaks/tools\n- Sharing tools used to acquire pirated content (cdn downloads, warez sites, etc)\n\n_This action has been logged. If you believe this to have been done unfairly please contact a staff member_');
+	warnPiracyEmbed.setDescription('A user has flagged this message as potentially relating to piracy. Pretendo Network does not support piracy of any kind. Please review [Rule 5] (https://discord.com/channels/408718485913468928/982632532484972574/1444460663669002281).\n If you have questions, please ask moderators in a #modmail thread.');
 
 	const message = await interaction.channel.messages.fetch(interaction.targetId);
 
@@ -95,7 +95,7 @@ async function warnPiracyHandler(interaction) {
 	});
 
 	await interaction.reply({
-		content: 'Message Warned',
+		content: 'Message Flagged',
 		ephemeral: true
 	});
 }
