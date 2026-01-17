@@ -38,7 +38,17 @@ async function readyHandler(client) {
 
 	console.log(`Logged in as ${client.user.tag}`);
 
-	client?.user?.setPresence({ activities: [{ name: '#modmail for moderation concerns', type: Discord.ActivityType.Listening }], status: Discord.PresenceUpdateStatus.Online });
+	_setRandomStatus(client);
+
+	// set random status every 10 min
+	setInterval(async function() {
+		_setRandomStatus(client);
+	}, 10 * 60 * 1000);
+}
+
+async function _setRandomStatus(client) {
+	const statuses = [ 'eating network cables 😋', 'becoming marketable', 'my aunt works at nintendo!', 'amazing looking water in this game', 'lgtm', 'who needs PRs, commit to main', 'join Tester+ today! real!', 'y can\'t metroid crawl :(', 'i wish squids were real', 'trans rights btw', 'no eta', 'soon™', 'soon™™™™™', 'rules in #rules, the rules channel', '🤔 did you know we have a Forum', '🤯 did you know we have a Discord', 'developer? i hardly know \'er!', 'kills you with hammers', 'purple for an amazing reason', 'works on my machine', 'furry = dev', 'you did, in fact, use cheats', 'ay lmao', 'do not open Homebrew Community', '/mod-application 😳' ];
+	client?.user?.setPresence({ activities: [{ name: statuses[Math.floor(Math.random() * statuses.length)], type: Discord.ActivityType.Playing }], status: Discord.PresenceUpdateStatus.Online });
 }
 
 /**
