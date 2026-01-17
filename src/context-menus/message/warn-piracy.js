@@ -34,10 +34,7 @@ async function warnPiracyHandler(interaction) {
 	}
 
 	await message.reply({
-		embeds: [warnPiracyEmbed],
-		files: [
-			__dirname + '/../../images/piracy.png'
-		]
+		embeds: [warnPiracyEmbed]
 	});
 
 	const reportEmbed = new Discord.EmbedBuilder();
