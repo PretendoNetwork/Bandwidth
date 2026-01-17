@@ -19,7 +19,7 @@ async function warnPiracyHandler(interaction) {
 	const warnPiracyEmbed = new Discord.EmbedBuilder();
 	warnPiracyEmbed.setColor(0xF36F8A);
 	warnPiracyEmbed.setTitle('Potential Piracy Reported');
-	warnPiracyEmbed.setDescription('A user has flagged this message as potentially relating to piracy. Pretendo Network does not support piracy of any kind. Please review [Rule 5](https://discord.com/channels/408718485913468928/982632532484972574/1444460663669002281).\n\n If you have any questions, please ask moderators in a #modmail thread.');
+	warnPiracyEmbed.setDescription('A user has flagged this message as potentially relating to piracy. Pretendo Network does not support piracy of any kind. Please review [Rule 5](https://discord.com/channels/408718485913468928/982632532484972574/1444460663669002281).\n\n If you have any questions, please ask moderators in a <#1370584407261581392> thread.');
 
 	const message = await interaction.channel.messages.fetch(interaction.targetId);
 
