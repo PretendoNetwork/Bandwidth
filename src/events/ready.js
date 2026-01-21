@@ -47,8 +47,8 @@ async function readyHandler(client) {
 }
 
 async function _setRandomStatus(client) {
-	const statuses = [ 'eating network cables 😋', 'becoming marketable', 'my aunt works at nintendo!', 'amazing looking water in this game', 'lgtm', 'who needs PRs, commit to main', 'join Tester+ today! real!', 'y can\'t metroid crawl :(', 'i wish squids were real', 'trans rights btw', 'no eta', 'soon™', 'soon™™™™™', 'rules in #rules, the rules channel', '🤔 did you know we have a Forum', '🤯 did you know we have a Discord', 'developer? i hardly know \'er!', 'kills you with hammers', 'purple for an amazing reason', 'works on my machine', 'furry = dev', 'you did, in fact, use cheats', 'ay lmao', 'do not open Homebrew Community', '/mod-application 😳' ];
-	client?.user?.setPresence({ activities: [{ name: statuses[Math.floor(Math.random() * statuses.length)], type: Discord.ActivityType.Playing }], status: Discord.PresenceUpdateStatus.Online });
+	const statuses = ['eating network cables 😋', 'becoming marketable', 'my aunt works at nintendo!', 'amazing looking water in this game', 'lgtm', 'who needs PRs, commit to main', 'join 🇨🇭 Tester+ today! real!', 'y can\'t metroid crawl :(', 'i wish squids were real', 'trans rights btw', 'no eta', 'soon™', 'soon™™™™™', 'rules in #rules, the rules channel', '🤔 did you know we have a Forum', '🤯 did you know we have a Discord', 'developer? i hardly know \'er!', 'kills you with hammers', 'purple for an amazing reason', 'works on my machine', 'furry = dev', 'you did, in fact, use cheats', 'ay lmao', 'do not open Homebrew Community', '😳 /mod-application', 'jom :3 is typing', '2038-01-19T03:14:08.000Z', '160-0103 w/ a side of Hynix chips'];
+	client?.user?.setPresence({ activities: [{ name: statuses[Math.floor(Math.random() * statuses.length)], type: Discord.ActivityType.Custom }], status: Discord.PresenceUpdateStatus.Online });
 }
 
 /**
