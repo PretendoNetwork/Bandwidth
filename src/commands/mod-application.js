@@ -8,20 +8,20 @@ const { modal: modApplicationModal } = require('../modals/mod-application');
  * @param {Discord.CommandInteraction} interaction
  */
 async function modApplicationHandler(interaction) {
-	modApplicationModal.setCustomId("mod-application-" + interaction.options.get('role').value);
+	modApplicationModal.setCustomId('mod-application-' + interaction.options.get('role').value);
 
-	if (interaction.options.get('18-or-older').value == "no") {
+	if (interaction.options.get('18-or-older').value == 'no') {
 		await interaction.reply({
-			content: `We are not accepting applications from individuals under the age of 18.`,
+			content: 'We are not accepting applications from individuals under the age of 18.',
 			ephemeral: true,
 			allowedMentions: {
 				parse: [], // dont allow tagging anything
 			},
 		});
 
-		var modType = interaction.options.get('role').value;
+		const modType = interaction.options.get('role').value;
 
-		var selectedDBItem = '';
+		let selectedDBItem = '';
 		switch (modType) {
 			case 'discord':
 				selectedDBItem = 'mod_applications_channel_id';

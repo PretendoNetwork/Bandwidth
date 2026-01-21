@@ -32,7 +32,7 @@ async function readyHandler(client) {
 	}
 
 	// Start poll refreshing for every minute
-	setInterval(async function() {
+	setInterval(async function () {
 		await pollUtils.updatePolls(client);
 	}, 60000);
 
@@ -41,7 +41,7 @@ async function readyHandler(client) {
 	_setRandomStatus(client);
 
 	// set random status every 10 min
-	setInterval(async function() {
+	setInterval(async function () {
 		_setRandomStatus(client);
 	}, 10 * 60 * 1000);
 }

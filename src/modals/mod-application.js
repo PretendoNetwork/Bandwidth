@@ -73,7 +73,7 @@ async function modApplicationHandler(interaction) {
 	const applyingMember = await interaction.member.fetch();
 	const guild = await interaction.guild.fetch();
 
-	var selectedDBItem = '';
+	let selectedDBItem = '';
 	switch(modType) {
 		case 'discord':
 			selectedDBItem = 'mod_applications_channel_id';
