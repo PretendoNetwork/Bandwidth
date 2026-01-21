@@ -24,6 +24,7 @@
     "@pretendonetwork/error-codes": "^1.2.0",
     "axios": "^1.4.0",
     "cld": "^2.9.0",
+    "discord-api-types": "^0.38.37",
     "discord-html-transcripts": "^3.1.2",
     "discord.js": "^14.25.0",
     "fs-extra": "^10.1.0",
