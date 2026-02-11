@@ -3,29 +3,29 @@ const database = require('../database');
 const { button: acceptButton } = require('../buttons/mod-application-accept');
 const { button: denyButton } = require('../buttons/mod-application-deny');
 
-const inServerSince = new Discord.TextInputBuilder();
-inServerSince.setCustomId('experience');
-inServerSince.setLabel('Do you have prior experience and if so, what?');
-inServerSince.setStyle(Discord.TextInputStyle.Short);
-inServerSince.setRequired(true);
+const priorExperience = new Discord.TextInputBuilder();
+priorExperience.setCustomId('experience');
+priorExperience.setLabel('Do you have prior experience and if so, what?');
+priorExperience.setStyle(Discord.TextInputStyle.Short);
+priorExperience.setRequired(true);
 
 const timezone = new Discord.TextInputBuilder();
 timezone.setCustomId('timezone');
-timezone.setLabel('What is your timezone?');
+timezone.setLabel('What is your timezone and availability?');
 timezone.setStyle(Discord.TextInputStyle.Short);
 timezone.setRequired(true);
-
-const availablity = new Discord.TextInputBuilder();
-availablity.setCustomId('availablity');
-availablity.setLabel('What is your availablity?');
-availablity.setStyle(Discord.TextInputStyle.Short);
-availablity.setRequired(true);
 
 const why = new Discord.TextInputBuilder();
 why.setCustomId('why');
 why.setLabel('Why do you want to become a moderator?');
 why.setStyle(Discord.TextInputStyle.Short);
 why.setRequired(true);
+
+const pnid = new Discord.TextInputBuilder();
+pnid.setCustomId('pnid');
+pnid.setLabel('What is your PNID?');
+pnid.setStyle(Discord.TextInputStyle.Short);
+pnid.setRequired(true);
 
 const extra = new Discord.TextInputBuilder();
 extra.setCustomId('extra');
@@ -34,16 +34,16 @@ extra.setStyle(Discord.TextInputStyle.Paragraph);
 extra.setRequired(true);
 
 const actionRow1 = new Discord.ActionRowBuilder();
-actionRow1.addComponents(inServerSince);
+actionRow1.addComponents(priorExperience);
 
 const actionRow2 = new Discord.ActionRowBuilder();
 actionRow2.addComponents(timezone);
 
 const actionRow3 = new Discord.ActionRowBuilder();
-actionRow3.addComponents(availablity);
+actionRow3.addComponents(why);
 
 const actionRow4 = new Discord.ActionRowBuilder();
-actionRow4.addComponents(why);
+actionRow4.addComponents(pnid);
 
 const actionRow5 = new Discord.ActionRowBuilder();
 actionRow5.addComponents(extra);
@@ -66,7 +66,7 @@ async function modApplicationHandler(interaction) {
 	const modType = interaction.customId.split('-').pop();
 	const experience = interaction.fields.getTextInputValue('experience');
 	const timezone = interaction.fields.getTextInputValue('timezone');
-	const availablity = interaction.fields.getTextInputValue('availablity');
+	const pnid = interaction.fields.getTextInputValue('pnid');
 	const why = interaction.fields.getTextInputValue('why');
 	const extra = interaction.fields.getTextInputValue('extra');
 
@@ -74,7 +74,7 @@ async function modApplicationHandler(interaction) {
 	const guild = await interaction.guild.fetch();
 
 	let selectedDBItem = '';
-	switch(modType) {
+	switch (modType) {
 		case 'discord':
 			selectedDBItem = 'mod_applications_channel_id';
 			break;
@@ -103,7 +103,7 @@ async function modApplicationHandler(interaction) {
 
 	modApplicationEmbed.setColor(0x9D6FF3);
 
-	switch(modType) {
+	switch (modType) {
 		case 'discord':
 			modApplicationEmbed.setTitle('Discord Mod Application');
 			break;
@@ -133,21 +133,21 @@ async function modApplicationHandler(interaction) {
 			value: experience
 		},
 		{
-			name: 'What is your timezone?',
+			name: 'What is your timezone and availability?',
 			value: timezone
-		},
-		{
-			name: 'What is your availablity?',
-			value: availablity
 		},
 		{
 			name: 'Why do you want to become a moderator?',
 			value: why
 		},
 		{
+			name: 'What is your PNID?',
+			value: pnid
+		},
+		{
 			name: 'What else can you tell us about yourself?',
 			value: extra
-		}
+		},
 	]);
 	modApplicationEmbed.setFooter({
 		text: 'Pretendo Network',
