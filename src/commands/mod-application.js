@@ -109,7 +109,7 @@ const command = new SlashCommandBuilder()
 				{ name: 'Discord Moderator', value: 'discord' },
 				//{ name: 'Discord VC Moderator', value: 'vc' },
 				{ name: 'Forum Moderator', value: 'forum' },
-				//{ name: 'Network Moderator', value: 'network' },
+				{ name: 'Network Moderator', value: 'network' },
 				{ name: 'Juxtaposition Moderator', value: 'juxt' }
 			))
 	.addStringOption(option =>
