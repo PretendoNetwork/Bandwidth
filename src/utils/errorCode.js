@@ -1,13 +1,12 @@
 const Discord = require('discord.js');
 const errors = require('@pretendonetwork/error-codes');
 
-const WIIU_SUPPORT_CODE_REGEX = /(\b1\d{2}-\d{4}\b)/gm;
-const THREE_DS_SUPPORT_CODE_REGEX = /(\b0\d{2}-\d{4}\b)/gm;
+const WIIU_SUPPORT_CODE_REGEX = /(\b1[\dXx]{2}-[\dXx]{4}\b)/gm;
+const THREE_DS_SUPPORT_CODE_REGEX = /(\b0[\dXx]{2}-[\dXx]{4}\b)/gm;
 // * There is probably a better way to do this regex
-const PRETENDO_SUPPORT_CODE_REGEX = /(\b678-\d{4}\b|\b598-\d{4}\b|\b727-\d{4}\b)/gm; // * 678 = Martini, 598 = Juxtaposition, 727 = PNID Account
+const PRETENDO_SUPPORT_CODE_REGEX = /(\b678-[\dXx]{4}\b|\b598-[\dXx]{4}\b|\b727-[\dXx]{4}\b)/gm; // * 678 = Martini, 598 = Juxtaposition, 727 = PNID Account
 
 /**
- *
  * @param {String}} message
  */
 function checkForErrorCode(text) {
