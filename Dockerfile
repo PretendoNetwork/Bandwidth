@@ -28,6 +28,11 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 
 COPY . .
 
+# Since the code references config.json directly via import,
+# this hack uses config.example.json temporarily just for the build to complete.
+# In runtime, it will still look for the real config.json.
+RUN --mount=type=bind,source=config.example.json,target=config.json \
+	npm run build
 
 # * Running the final application
 FROM base AS final
@@ -38,9 +43,9 @@ USER node
 
 COPY package.json .
 
-COPY --from=build ${app_dir} ${app_dir}
+COPY --from=build ${app_dir}/dist ${app_dir}/dist
 COPY --from=dependencies ${app_dir}/node_modules ${app_dir}/node_modules
 
 VOLUME ["./config.json", "./database.db"]
 
-CMD ["node", "./src/bot"]
+CMD ["node", "./dist/bot"]

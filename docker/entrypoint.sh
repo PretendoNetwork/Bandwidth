@@ -9,4 +9,4 @@ for file in $files; do
     fi
 done
 
-exec node src/bot.js
+exec node dist/bot.js

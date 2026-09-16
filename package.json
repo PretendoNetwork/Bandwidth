@@ -2,11 +2,12 @@
   "name": "bandwidth",
   "version": "1.0.0",
   "description": "Official Pretendo Network Discord community bot",
-  "main": "src/bot.js",
+  "main": "dist/bot.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint .",
-    "start": "node ./src/bot",
-    "start:dev": "NODE_ENV=development node ./src/bot"
+    "lint": "eslint .",
+    "start": "ts-node-dev --files -r tsconfig-paths/register ./src/bot",
+    "copy-static": "copyfiles -e \"src/**/*.ts\" -u 1 \"src/**/*\" dist",
+    "build": "tsc && tsc-alias && npm run copy-static"
   },
   "repository": {
     "type": "git",
@@ -20,21 +21,32 @@
   },
   "homepage": "https://github.com/PretendoNetwork/Bandwidth#readme",
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.40",
+    "@discordjs/rest": "^2.6.1",
+    "@napi-rs/canvas": "0.1.64",
     "@pretendonetwork/error-codes": "^1.2.0",
     "axios": "^1.4.0",
     "cld": "^2.9.0",
     "discord-api-types": "^0.38.52",
-    "discord-html-transcripts": "^3.1.2",
+    "discord-html-transcripts": "~3.1.2",
     "discord.js": "^14.27.0",
     "fs-extra": "^10.1.0",
+    "glob": "^13.0.6",
     "lookpath": "^1.2.2",
     "natural": "^6.5.0",
     "sqlite": "^4.1.2",
-    "sqlite3": "^5.1.2"
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
-    "eslint": "^8.14.0",
-    "eslint-plugin-jsdoc": "^39.2.9"
+    "@pretendonetwork/eslint-config": "^0.0.8",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.19.39",
+    "copyfiles": "^2.4.1",
+    "eslint": "^9.39.4",
+    "globals": "^17.4.0",
+    "sharp": "^0.35.4",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^6.0.2"
   }
 }
