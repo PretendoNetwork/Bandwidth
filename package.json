@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Official Pretendo Network Discord community bot",
   "main": "src/bot.js",
+  "engines": {
+    "node": "^24.22.1"
+  },
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
     "start": "node ./src/bot",
